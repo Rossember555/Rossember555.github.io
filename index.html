@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaTeX e IA en la Ingeniería - Material Docente</title>
+
+    <!-- Tipografía Corporativa: Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Iconos: FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ua: {
+                            dark: '#050701',
+                            darker: '#0d1302',
+                            lime: '#C8FF01',
+                            yellow: '#FFCE00',
+                            teal: '#00D1E6',
+                            gray: '#E2E8F0',    /* Gris pizarra muy claro para lectura */
+                            muted: '#94A3B8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- MathJax -->
+    <script>
+        window.MathJax = {
+            loader: {load: ['[tex]/mhchem']},
+            tex: {
+                packages: {'[+]': ['mhchem']},
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            background-color: #050701;
+            margin: 0;
+            height: 100vh;
+            color: #F8FAFC;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        @keyframes float {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-float { animation: float 20s ease-in-out infinite; }
+        .animate-float-delayed { animation: float 25s ease-in-out infinite reverse; }
+
+        #read-content {
+            display: flex;
+            flex-direction: row;
+            width: 100vw;
+            height: 100vh;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+        }
+
+        #read-content::-webkit-scrollbar { display: none; }
+
+        .slide-section {
+            scroll-snap-align: start;
+            flex: 0 0 100vw;
+            width: 100vw;
+            height: 100vh;
+            padding-top: 100px;
+            padding-bottom: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .math-container {
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 1.2rem;
+            border: 1px solid rgba(200, 255, 1, 0.2);
+            color: #FFFFFF;
+            transition: all 0.3s ease;
+        }
+
+        .math-container:hover {
+            border-color: #C8FF01;
+            box-shadow: 0 0 20px rgba(200, 255, 1, 0.15);
+        }
+
+        .pagination-dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        .pagination-dot.active {
+            width: 24px;
+            background-color: #C8FF01;
+            border-radius: 4px;
+        }
+
+        .nav-btn {
+            background: rgba(200, 255, 1, 0.95);
+            color: #050701;
+            box-shadow: 0 0 25px rgba(200, 255, 1, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fondos Animados -->
+    <div class="fixed top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-ua-teal opacity-[0.06] blur-[120px] rounded-full pointer-events-none z-0 animate-float"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-ua-lime opacity-[0.04] blur-[120px] rounded-full pointer-events-none z-0 animate-float-delayed"></div>
+
+    <!-- Header Corporativo -->
+    <header class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-[90%] max-w-5xl glass-panel rounded-full px-6 py-4 border-white/20">
+        <div class="flex items-center justify-between">
+            <a href="#" onclick="goToSlide(0)" class="flex items-center gap-3">
+                <img src="https://uamerica.credyty.com.co/assets/logo/logo_blanco.png" alt="Universidad de América" class="h-8 md:h-10 object-contain">
+            </a>
+            <nav class="hidden lg:flex items-center space-x-6 text-[10px] font-black uppercase tracking-[0.2em] text-white">
+                <button onclick="goToSlide(1)" class="hover:text-ua-lime transition">Introducción</button>
+                <button onclick="goToSlide(3)" class="hover:text-ua-lime transition">Ejemplos Ingeniería</button>
+                <button onclick="goToSlide(8)" class="text-ua-lime bg-white/5 px-4 py-1.5 rounded-full transition border border-ua-lime/20">Uso de IA</button>
+            </nav>
+            <div id="progress-bar-container" class="h-1.5 w-24 bg-white/10 rounded-full overflow-hidden">
+                <div id="progress-bar" class="bg-ua-lime h-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navegación -->
+    <button onclick="moveSlide(-1)" id="btnPrev" class="fixed left-6 top-1/2 -translate-y-1/2 z-40 bg-white/10 hover:bg-white/20 text-white w-14 h-14 rounded-full flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 backdrop-blur-md">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <button onclick="moveSlide(1)" id="btnNext" class="fixed right-6 top-1/2 -translate-y-1/2 z-40 nav-btn w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300">
+        <i class="fas fa-chevron-right text-xl font-black"></i>
+    </button>
+
+    <main id="read-content">
+
+        <!-- SLIDE 0: PORTADA -->
+        <section id="slide-0" class="slide-section">
+            <div class="container mx-auto px-6 text-center">
+                <div class="inline-block px-5 py-2 rounded-full border border-ua-lime/40 bg-ua-lime/10 text-ua-lime text-xs font-bold tracking-[0.2em] uppercase mb-8">
+                    Recurso para el Éxito Docente
+                </div>
+                <h1 class="text-6xl md:text-8xl font-black text-white leading-tight mb-8 tracking-tighter">
+                    CONTENIDOS DE <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-ua-lime to-ua-teal italic uppercase">Alta Ingeniería</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-ua-gray max-w-4xl mx-auto font-medium leading-relaxed mb-12">
+                    Descubra por qué LaTeX es el aliado definitivo del profesor moderno para crear materiales virtuales nítidos, accesibles y profesionales.
+                </p>
+                <button onclick="goToSlide(1)" class="bg-ua-lime text-ua-dark font-black py-5 px-14 rounded-full hover:bg-white hover:scale-105 transition-all duration-300 shadow-[0_0_40px_rgba(200,255,1,0.3)] uppercase tracking-wider">
+                    Empezar Presentación
+                </button>
+            </div>
+        </section>
+
+        <!-- SLIDE 1: IMPORTANCIA EN VIRTUALIDAD -->
+        <section id="slide-1" class="slide-section">
+            <div class="container mx-auto px-6 max-w-6xl">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <h2 class="text-5xl font-black text-white mb-8">¿Por qué LaTeX en entornos virtuales?</h2>
+                        <p class="text-ua-gray text-xl mb-6 leading-relaxed">
+                            En la educación virtual, la pantalla es nuestro único canal. Una fórmula borrosa o mal alineada genera <strong>fatiga visual</strong> y distrae al estudiante de lo importante: el concepto.
+                        </p>
+                        <div class="grid gap-4">
+                            <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10">
+                                <i class="fas fa-expand text-ua-lime text-2xl"></i>
+                                <span class="text-white font-bold">Escalabilidad:</span> <span class="text-ua-gray text-sm italic">Se lee perfecto en un celular o una pantalla 4K.</span>
+                            </div>
+                            <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10">
+                                <i class="fas fa-universal-access text-ua-teal text-2xl"></i>
+                                <span class="text-white font-bold">Accesibilidad:</span> <span class="text-ua-gray text-sm italic">Lectores de pantalla pueden "leer" las matemáticas.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-panel p-10 rounded-[3rem] text-center border-ua-teal/20">
+                        <div class="mb-8">
+                            <p class="text-xs font-bold text-ua-muted uppercase mb-2">Lo que el alumno percibe:</p>
+                            <div class="h-32 bg-black/40 rounded-2xl flex items-center justify-center p-6 border border-white/5 overflow-hidden">
+                                <span class="text-ua-gray opacity-30 italic text-sm">Visualización pixelada de capturas de pantalla...</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-arrow-down text-ua-lime text-2xl animate-bounce mb-6"></i>
+                        <div class="math-container text-4xl">
+                            $$ \mathbf{F} = m \cdot \mathbf{a} $$
+                        </div>
+                        <p class="mt-4 text-ua-lime text-xs font-black uppercase">Nitidez Absoluta</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: QUÉ ES (SIN TECNICISMOS) -->
+        <section id="slide-2" class="slide-section">
+            <div class="container mx-auto px-6 max-w-4xl text-center">
+                <h2 class="text-5xl font-black text-white mb-10">¿Qué es LaTeX realmente?</h2>
+                <div class="glass-panel p-12 rounded-[3rem]">
+                    <p class="text-2xl text-ua-gray font-light leading-relaxed mb-8">
+                        Piense en LaTeX como una <strong>"fuente inteligente"</strong> para la ciencia. En lugar de dibujar una fórmula, usted le dice al sistema lo que quiere mostrar, y él se encarga de que el diseño sea perfecto, siguiendo las leyes de la tipografía científica mundial.
+                    </p>
+                    <div class="flex justify-center gap-12">
+                        <div class="text-center">
+                            <i class="fas fa-magic text-4xl text-ua-lime mb-4"></i>
+                            <p class="text-xs font-bold text-white uppercase">Usted: El Genio</p>
+                            <p class="text-[10px] text-ua-muted">Propone el concepto</p>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-gears text-4xl text-ua-teal mb-4"></i>
+                            <p class="text-xs font-bold text-white uppercase">LaTeX: El Motor</p>
+                            <p class="text-[10px] text-ua-muted">Genera la perfección</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: GALERÍA CIVIL / ESTRUCTURAS -->
+        <section id="slide-3" class="slide-section">
+            <div class="container mx-auto px-6 max-w-6xl">
+                <div class="flex items-center gap-4 mb-10">
+                    <div class="w-12 h-12 bg-ua-lime/20 rounded-xl flex items-center justify-center text-ua-lime">
+                        <i class="fas fa-hard-hat"></i>
+                    </div>
+                    <h2 class="text-4xl font-black text-white uppercase">Ingeniería Civil y Estructuras</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <p class="text-ua-gray font-medium italic">Momento Flector en Vigas:</p>
+                        <div class="math-container text-2xl">
+                            $$ M(x) = EI \frac{d^2y}{dx^2} $$
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <p class="text-ua-gray font-medium italic">Ecuación de Bernoulli (Fluidos):</p>
+                        <div class="math-container text-2xl">
+                            $$ P_1 + \frac{1}{2}\rho v_1^2 + \rho gh_1 = \text{cte} $$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: GALERÍA ELÉCTRICA / ELECTRÓNICA -->
+        <section id="slide-4" class="slide-section">
+            <div class="container mx-auto px-6 max-w-6xl">
+                <div class="flex items-center gap-4 mb-10">
+                    <div class="w-12 h-12 bg-ua-teal/20 rounded-xl flex items-center justify-center text-ua-teal">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h2 class="text-4xl font-black text-white uppercase">Ingeniería Eléctrica</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <p class="text-ua-gray font-medium italic">Impedancia Compleja:</p>
+                        <div class="math-container text-2xl">
+                            $$ \mathbf{Z} = R + j\left( \omega L - \frac{1}{\omega C} \right) $$
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <p class="text-ua-gray font-medium italic">Transformada de Laplace:</p>
+                        <div class="math-container text-2xl">
+                            $$ F(s) = \int_0^\infty f(t) e^{-st} \, dt $$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: GALERÍA INDUSTRIAL / ESTADÍSTICA -->
+        <section id="slide-5" class="slide-section">
+            <div class="container mx-auto px-6 max-w-6xl">
+                <div class="flex items-center gap-4 mb-10">
+                    <div class="w-12 h-12 bg-ua-yellow/20 rounded-xl flex items-center justify-center text-ua-yellow">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h2 class="text-4xl font-black text-white uppercase">Ingeniería Industrial y Datos</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <p class="text-ua-gray font-medium italic">Distribución Normal:</p>
+                        <div class="math-container text-xl">
+                            $$ f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2} $$
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <p class="text-ua-gray font-medium italic">Modelos de Inventarios (EOQ):</p>
+                        <div class="math-container text-xl">
+                            $$ Q^* = \sqrt{\frac{2DS}{H}} $$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: QUÍMICA Y TERMODINÁMICA -->
+        <section id="slide-6" class="slide-section">
+            <div class="container mx-auto px-6 max-w-6xl">
+                <div class="flex items-center gap-4 mb-10">
+                    <div class="w-12 h-12 bg-pink-500/20 rounded-xl flex items-center justify-center text-pink-400">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h2 class="text-4xl font-black text-white uppercase">Química y Procesos</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <p class="text-ua-gray font-medium italic">Entalpía de Reacción:</p>
+                        <div class="math-container text-2xl">
+                            $$ \Delta H_{rxn}^\circ = \sum n\Delta H_f^\circ(\text{prod}) - \sum m\Delta H_f^\circ(\text{react}) $$
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <p class="text-ua-gray font-medium italic">Equilibrio Químico (\ce{mhchem}):</p>
+                        <div class="math-container text-2xl">
+                            $$ \ce{N2 + 3H2 <=> 2NH3} $$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 7: FINANZAS Y ECONOMÍA -->
+        <section id="slide-7" class="slide-section">
+            <div class="container mx-auto px-6 max-w-6xl">
+                <div class="flex items-center gap-4 mb-10">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center text-green-400">
+                        <i class="fas fa-hand-holding-dollar"></i>
+                    </div>
+                    <h2 class="text-4xl font-black text-white uppercase">Ingeniería Financiera</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <p class="text-ua-gray font-medium italic">Interés Compuesto:</p>
+                        <div class="math-container text-2xl text-center">
+                            $$ VF = VP(1 + i)^n $$
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <p class="text-ua-gray font-medium italic">Valor Presente Neto:</p>
+                        <div class="math-container text-xl text-center">
+                            $$ VPN = -I_0 + \sum_{t=1}^n \frac{F_t}{(1+k)^t} $$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8: IA COMO SOLUCIÓN -->
+        <section id="slide-8" class="slide-section">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <div class="glass-panel p-12 rounded-[3.5rem] border-ua-lime/30 text-center">
+                    <div class="w-20 h-20 bg-ua-lime/20 rounded-full flex items-center justify-center mx-auto mb-8">
+                        <i class="fas fa-robot text-4xl text-ua-lime"></i>
+                    </div>
+                    <h2 class="text-5xl font-black text-white mb-6 italic">¿LaTeX es difícil? Con la IA, no.</h2>
+                    <p class="text-2xl text-ua-gray font-light leading-relaxed mb-10">
+                        Usted no necesita escribir el código. Solo necesita saber <strong>cómo pedirlo</strong>. La IA se encarga de la sintaxis técnica, usted se encarga de la excelencia académica.
+                    </p>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="p-6 bg-white/5 rounded-2xl border border-white/10">
+                            <i class="fas fa-keyboard text-ua-teal mb-3"></i>
+                            <p class="text-[10px] font-bold text-white uppercase">1. Describa</p>
+                            <p class="text-[9px] text-ua-muted">"Dame la fórmula de Navier-Stokes..."</p>
+                        </div>
+                        <div class="p-6 bg-white/5 rounded-2xl border border-white/10">
+                            <i class="fas fa-copy text-ua-lime mb-3"></i>
+                            <p class="text-[10px] font-bold text-white uppercase">2. Copie</p>
+                            <p class="text-[9px] text-ua-muted">Tome el código que la IA genera</p>
+                        </div>
+                        <div class="p-6 bg-white/5 rounded-2xl border border-white/10">
+                            <i class="fas fa-check text-white mb-3"></i>
+                            <p class="text-[10px] font-bold text-white uppercase">3. Pegue</p>
+                            <p class="text-[9px] text-ua-muted">Vea la magia en su plataforma</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 9: EJEMPLO DE PROMPTS -->
+        <section id="slide-9" class="slide-section">
+            <div class="container mx-auto px-6 max-w-6xl">
+                <h2 class="text-4xl font-black text-white text-center mb-12">Cómo hablarle a la IA</h2>
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="glass-panel p-10 rounded-3xl border-l-8 border-ua-lime">
+                        <p class="text-xs font-black text-ua-lime uppercase mb-4 tracking-widest">Ejemplo 1 (Mecánica):</p>
+                        <div class="p-4 bg-black/60 rounded-xl mb-6 text-sm italic text-ua-gray border border-white/5">
+                            "Genera el código LaTeX para la ecuación de diseño de una columna de Euler con extremos articulados."
+                        </div>
+                        <div class="math-container text-2xl">
+                            $$ P_{cr} = \frac{\pi^2 EI}{(KL)^2} $$
+                        </div>
+                    </div>
+                    <div class="glass-panel p-10 rounded-3xl border-l-8 border-ua-teal">
+                        <p class="text-xs font-black text-ua-teal uppercase mb-4 tracking-widest">Ejemplo 2 (Química):</p>
+                        <div class="p-4 bg-black/60 rounded-xl mb-6 text-sm italic text-ua-gray border border-white/5">
+                            "Dame la ecuación de la constante de equilibrio de la síntesis del amoniaco usando mhchem."
+                        </div>
+                        <div class="math-container text-2xl">
+                            $$ K_p = \frac{P_{NH_3}^2}{P_{N_2} P_{H_2}^3} $$
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-16 text-center">
+                    <h3 class="text-3xl font-black text-white mb-6">¿Está listo para el futuro?</h3>
+                    <button onclick="goToSlide(0)" class="bg-ua-lime text-ua-dark font-black py-4 px-12 rounded-full hover:scale-110 transition-all text-lg shadow-2xl">
+                        Empezar de nuevo
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Indicadores de Paginación -->
+    <div class="fixed bottom-10 left-1/2 -translate-x-1/2 z-40 flex gap-4 px-6 py-4 glass-panel rounded-full border-white/20" id="pagination-dots"></div>
+
+    <script>
+        const container = document.getElementById('read-content');
+        const dotsContainer = document.getElementById('pagination-dots');
+        const slides = document.querySelectorAll('.slide-section');
+        const btnPrev = document.getElementById('btnPrev');
+        const btnNext = document.getElementById('btnNext');
+        const progressBar = document.getElementById('progress-bar');
+
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'pagination-dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.pagination-dot');
+
+        function goToSlide(index) {
+            container.scrollTo({
+                left: index * window.innerWidth,
+                behavior: 'smooth'
+            });
+        }
+
+        function moveSlide(dir) {
+            const current = Math.round(container.scrollLeft / window.innerWidth);
+            let next = current + dir;
+            if (next >= 0 && next < slides.length) {
+                goToSlide(next);
+            }
+        }
+
+        container.addEventListener('scroll', () => {
+            const index = Math.round(container.scrollLeft / window.innerWidth);
+            const progress = (container.scrollLeft / (container.scrollWidth - window.innerWidth)) * 100;
+
+            progressBar.style.width = `${progress}%`;
+
+            btnPrev.style.opacity = index === 0 ? '0' : '1';
+            btnPrev.style.pointerEvents = index === 0 ? 'none' : 'auto';
+            btnNext.style.opacity = index === slides.length - 1 ? '0' : '1';
+            btnNext.style.pointerEvents = index === slides.length - 1 ? 'none' : 'auto';
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            const index = Math.round(container.scrollLeft / window.innerWidth);
+            goToSlide(index);
+        });
+    </script>
+</body>
+</html>
