@@ -17,7 +17,7 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
   border-radius:12px;
   border:1px solid rgba(200,255,1,.2);
   position:relative;
-  line-height:0; /* 🔥 elimina espacio fantasma */
+  line-height:0;
 }
 
 /* TRACK */
@@ -31,7 +31,7 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
 .track img{
   width:20%;
   flex-shrink:0;
-  display:block; /* 🔥 elimina espacio inferior */
+  display:block;
 }
 
 /* MOVIMIENTO */
@@ -49,8 +49,6 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
   left:0;
   width:100%;
   transform:translateY(-50%);
-  justify-content:space-between;
-  padding:0 10px;
   pointer-events:none;
 }
 
@@ -59,13 +57,14 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
 #s3:checked~.window .n3,
 #s4:checked~.window .n4,
 #s5:checked~.window .n5{
-  display:flex;
+  display:block;
 }
 
+/* BOTONES */
 .btn{
   pointer-events:auto;
-  width:40px;
-  height:40px;
+  width:42px;
+  height:42px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -73,15 +72,23 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
   font-weight:700;
   cursor:pointer;
   font-size:1.2rem;
+  transition:.2s;
 }
 
+.btn:hover{transform:scale(1.1)}
+
+/* POSICIÓN CORRECTA */
 .prev{
+  position:absolute;
+  left:15px; /* 🔥 separación izquierda */
   background:rgba(0,0,0,0.5);
   color:#c8ff01;
   border:1px solid #c8ff01;
 }
 
 .next{
+  position:absolute;
+  right:15px; /* 🔥 ahora NO está pegado */
   background:#c8ff01;
   color:#0a1104;
 }
@@ -91,7 +98,7 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
   display:flex;
   justify-content:center;
   gap:6px;
-  margin-top:6px; /* 🔥 reducido */
+  margin-top:6px;
 }
 
 .dots label{
@@ -142,7 +149,7 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
         <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/15.png?raw=true">
       </div>
 
-      <!-- Flechas centradas -->
+      <!-- Flechas -->
       <div class="nav n1">
         <label for="s5" class="btn prev">←</label>
         <label for="s2" class="btn next">→</label>
