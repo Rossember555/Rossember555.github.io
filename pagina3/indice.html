@@ -6,15 +6,24 @@
 <title>Recurso</title>
 
 <style>
-body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans-serif}
-.container{max-width:900px;margin:auto}
+body{
+  margin:0;
+  padding:10px; /* 🔥 reducido */
+  background:#050801;
+  font-family:'Segoe UI',Tahoma,sans-serif
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+}
 
 .slider input{display:none}
 
 /* CONTENEDOR */
 .window{
   overflow:hidden;
-  border-radius:12px;
+  border-radius:10px; /* 🔥 más compacto */
   border:1px solid rgba(200,255,1,.2);
   position:relative;
   line-height:0;
@@ -24,7 +33,7 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
 .track{
   display:flex;
   width:500%;
-  transition:transform .6s ease;
+  transition:transform .5s ease; /* 🔥 un poco más rápido */
 }
 
 /* IMÁGENES */
@@ -63,24 +72,23 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
 /* BOTONES */
 .btn{
   pointer-events:auto;
-  width:42px;
-  height:42px;
+  width:36px; /* 🔥 más pequeño */
+  height:36px;
   display:flex;
   align-items:center;
   justify-content:center;
   border-radius:50%;
   font-weight:700;
   cursor:pointer;
-  font-size:1.2rem;
+  font-size:1rem;
   transition:.2s;
 }
 
-.btn:hover{transform:scale(1.1)}
+.btn:hover{transform:scale(1.08)}
 
-/* POSICIÓN CORRECTA */
 .prev{
   position:absolute;
-  left:15px; /* 🔥 separación izquierda */
+  left:10px; /* 🔥 menos separación */
   background:rgba(0,0,0,0.5);
   color:#c8ff01;
   border:1px solid #c8ff01;
@@ -88,7 +96,7 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
 
 .next{
   position:absolute;
-  right:15px; /* 🔥 ahora NO está pegado */
+  right:10px; /* 🔥 menos separación */
   background:#c8ff01;
   color:#0a1104;
 }
@@ -97,13 +105,13 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
 .dots{
   display:flex;
   justify-content:center;
-  gap:6px;
-  margin-top:6px;
+  gap:5px;
+  margin-top:4px; /* 🔥 reducido */
 }
 
 .dots label{
-  width:8px;
-  height:8px;
+  width:7px;
+  height:7px;
   border-radius:50%;
   background:#777;
   cursor:pointer;
@@ -124,9 +132,9 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
 <div class="container">
 
   <!-- Bienvenida -->
-  <div style="background:#0a1104;border-left:4px solid #c8ff01;border-radius:10px;padding:14px;margin-bottom:12px;color:#fff">
-    <h2 style="margin:0 0 5px;color:#c8ff01;font-size:1.3rem">Bienvenido(a)</h2>
-    <p style="margin:0;font-size:.9rem;color:#ccc">Explora el recurso y avanza a tu ritmo.</p>
+  <div style="background:#0a1104;border-left:3px solid #c8ff01;border-radius:8px;padding:10px;margin-bottom:8px;color:#fff">
+    <h2 style="margin:0 0 4px;color:#c8ff01;font-size:1.2rem">Bienvenido(a)</h2>
+    <p style="margin:0;font-size:.85rem;color:#ccc">Explora el recurso y avanza a tu ritmo.</p>
   </div>
 
   <div class="slider">
