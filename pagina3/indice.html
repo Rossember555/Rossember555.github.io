@@ -124,6 +124,55 @@ body{
 #s5:checked~.dots label:nth-child(5){
   background:#c8ff01;
 }
+
+/* ENCABEZADO MODERNO */
+.modern-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-left: 3px solid #c8ff01;
+  border-radius: 12px;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+}
+.header-icon {
+  width: 44px;
+  height: 44px;
+  background: rgba(200, 255, 1, 0.1);
+  border: 1px solid rgba(200, 255, 1, 0.2);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.header-text h2 {
+  margin: 0 0 4px;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.header-text .highlight {
+  color: #c8ff01;
+}
+.header-text .tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  color: #00e5ff;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.header-text p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.4;
+}
 </style>
 </head>
 
@@ -132,9 +181,15 @@ body{
 <div class="container">
 
   <!-- Bienvenida -->
-  <div style="background:#0a1104;border-left:3px solid #c8ff01;border-radius:8px;padding:10px;margin-bottom:8px;color:#fff">
-    <h2 style="margin:0 0 4px;color:#c8ff01;font-size:1.2rem">Bienvenido(a)</h2>
-    <p style="margin:0;font-size:.85rem;color:#ccc">Explora el recurso y avanza a tu ritmo.</p>
+  <div class="modern-header">
+    <div class="header-icon">
+      <span style="font-size: 1.2rem;">✨</span>
+    </div>
+    <div class="header-text">
+      <span class="tag">Galería Interactiva</span>
+      <h2>Explora el <span class="highlight">Contenido</span></h2>
+      <p>Desliza o usa las flechas para avanzar a tu propio ritmo.</p>
+    </div>
   </div>
 
   <div class="slider">
