@@ -10,23 +10,38 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
 .container{max-width:900px;margin:auto}
 
 .slider input{display:none}
+
+/* CONTENEDOR */
 .window{
   overflow:hidden;
   border-radius:12px;
   border:1px solid rgba(200,255,1,.2);
-  position:relative; /* 🔥 CLAVE */
+  position:relative;
+  line-height:0; /* 🔥 elimina espacio fantasma */
 }
 
-.track{display:flex;width:500%;transition:transform .6s ease}
-.track img{width:20%;flex-shrink:0}
+/* TRACK */
+.track{
+  display:flex;
+  width:500%;
+  transition:transform .6s ease;
+}
 
+/* IMÁGENES */
+.track img{
+  width:20%;
+  flex-shrink:0;
+  display:block; /* 🔥 elimina espacio inferior */
+}
+
+/* MOVIMIENTO */
 #s1:checked~.window .track{transform:translateX(0)}
 #s2:checked~.window .track{transform:translateX(-20%)}
 #s3:checked~.window .track{transform:translateX(-40%)}
 #s4:checked~.window .track{transform:translateX(-60%)}
 #s5:checked~.window .track{transform:translateX(-80%)}
 
-/* 🔥 BOTONES SOBRE LA IMAGEN */
+/* FLECHAS */
 .nav{
   display:none;
   position:absolute;
@@ -47,7 +62,6 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
   display:flex;
 }
 
-/* BOTONES */
 .btn{
   pointer-events:auto;
   width:40px;
@@ -72,14 +86,29 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
   color:#0a1104;
 }
 
-/* INDICADORES */
-.dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
-.dots label{width:8px;height:8px;border-radius:50%;background:#777;cursor:pointer}
+/* DOTS */
+.dots{
+  display:flex;
+  justify-content:center;
+  gap:6px;
+  margin-top:6px; /* 🔥 reducido */
+}
+
+.dots label{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#777;
+  cursor:pointer;
+}
+
 #s1:checked~.dots label:nth-child(1),
 #s2:checked~.dots label:nth-child(2),
 #s3:checked~.dots label:nth-child(3),
 #s4:checked~.dots label:nth-child(4),
-#s5:checked~.dots label:nth-child(5){background:#c8ff01}
+#s5:checked~.dots label:nth-child(5){
+  background:#c8ff01;
+}
 </style>
 </head>
 
@@ -88,19 +117,21 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
 <div class="container">
 
   <!-- Bienvenida -->
-  <div style="background:#0a1104;border-left:4px solid #c8ff01;border-radius:10px;padding:14px;margin-bottom:16px;color:#fff">
+  <div style="background:#0a1104;border-left:4px solid #c8ff01;border-radius:10px;padding:14px;margin-bottom:12px;color:#fff">
     <h2 style="margin:0 0 5px;color:#c8ff01;font-size:1.3rem">Bienvenido(a)</h2>
     <p style="margin:0;font-size:.9rem;color:#ccc">Explora el recurso y avanza a tu ritmo.</p>
   </div>
 
   <div class="slider">
 
+    <!-- Radios -->
     <input type="radio" name="s" id="s1" checked>
     <input type="radio" name="s" id="s2">
     <input type="radio" name="s" id="s3">
     <input type="radio" name="s" id="s4">
     <input type="radio" name="s" id="s5">
 
+    <!-- Slider -->
     <div class="window">
 
       <div class="track">
@@ -111,7 +142,7 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
         <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/15.png?raw=true">
       </div>
 
-      <!-- 🔥 CONTROLES SOBRE LA IMAGEN -->
+      <!-- Flechas centradas -->
       <div class="nav n1">
         <label for="s5" class="btn prev">←</label>
         <label for="s2" class="btn next">→</label>
@@ -139,6 +170,7 @@ body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans
 
     </div>
 
+    <!-- Indicadores -->
     <div class="dots">
       <label for="s1"></label>
       <label for="s2"></label>
