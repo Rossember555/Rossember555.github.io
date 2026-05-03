@@ -7,118 +7,104 @@
 
 <style>
 body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans-serif}
-.moodle-content-container{max-width:1000px;margin:auto}
+.container{max-width:900px;margin:auto}
 
-.slider-moodle input{display:none}
-.slider-window{overflow:hidden;border-radius:14px;border:1px solid rgba(200,255,1,.18)}
-.slides-track{display:flex;width:500%;transition:transform .7s ease}
-.slides-track img{width:20%;flex-shrink:0}
+.slider input{display:none}
+.window{overflow:hidden;border-radius:12px;border:1px solid rgba(200,255,1,.2)}
+.track{display:flex;width:500%;transition:transform .6s ease}
+.track img{width:20%;flex-shrink:0}
 
-#slide1:checked~.slider-window .slides-track{transform:translateX(0)}
-#slide2:checked~.slider-window .slides-track{transform:translateX(-20%)}
-#slide3:checked~.slider-window .slides-track{transform:translateX(-40%)}
-#slide4:checked~.slider-window .slides-track{transform:translateX(-60%)}
-#slide5:checked~.slider-window .slides-track{transform:translateX(-80%)}
+#s1:checked~.window .track{transform:translateX(0)}
+#s2:checked~.window .track{transform:translateX(-20%)}
+#s3:checked~.window .track{transform:translateX(-40%)}
+#s4:checked~.window .track{transform:translateX(-60%)}
+#s5:checked~.window .track{transform:translateX(-80%)}
 
-.nav-slide{display:none;justify-content:center;gap:12px;margin-top:14px}
-#slide1:checked~.nav1,
-#slide2:checked~.nav2,
-#slide3:checked~.nav3,
-#slide4:checked~.nav4,
-#slide5:checked~.nav5{display:flex}
+.nav{display:none;justify-content:center;gap:10px;margin-top:12px}
+#s1:checked~.n1,
+#s2:checked~.n2,
+#s3:checked~.n3,
+#s4:checked~.n4,
+#s5:checked~.n5{display:flex}
 
-.btn-moodle{padding:10px 20px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.9rem}
-.btn-atras{border:1px solid rgba(200,255,1,.4);color:#c8ff01;background:transparent}
-.btn-siguiente{border:1px solid #c8ff01;background:#c8ff01;color:#0a1104}
+.btn{padding:8px 16px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.85rem}
+.prev{border:1px solid #c8ff01;color:#c8ff01;background:transparent}
+.next{background:#c8ff01;color:#0a1104;border:1px solid #c8ff01}
 
-.puntos{display:flex;justify-content:center;gap:6px;margin-top:12px}
-.puntos label{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer}
-#slide1:checked~.puntos label:nth-child(1),
-#slide2:checked~.puntos label:nth-child(2),
-#slide3:checked~.puntos label:nth-child(3),
-#slide4:checked~.puntos label:nth-child(4),
-#slide5:checked~.puntos label:nth-child(5){background:#c8ff01}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
+.dots label{width:8px;height:8px;border-radius:50%;background:#777;cursor:pointer}
+#s1:checked~.dots label:nth-child(1),
+#s2:checked~.dots label:nth-child(2),
+#s3:checked~.dots label:nth-child(3),
+#s4:checked~.dots label:nth-child(4),
+#s5:checked~.dots label:nth-child(5){background:#c8ff01}
 </style>
 </head>
 
 <body>
 
-<div class="moodle-content-container">
+<div class="container">
 
-  <div style="border-radius:18px;overflow:hidden;border:1px solid rgba(200,255,1,.15);box-shadow:0 8px 25px rgba(0,0,0,.5);background:#0a1104">
+  <!-- Bienvenida simplificada -->
+  <div style="background:#0a1104;border-left:4px solid #c8ff01;border-radius:10px;padding:14px;margin-bottom:16px;color:#fff">
+    <h2 style="margin:0 0 5px;color:#c8ff01;font-size:1.3rem">Bienvenido(a)</h2>
+    <p style="margin:0;font-size:.9rem;color:#ccc">Explora el recurso y avanza a tu ritmo.</p>
+  </div>
 
-    <div style="height:4px;background:linear-gradient(90deg,#C8FF01,#00E5FF,#FFCE00)"></div>
+  <!-- Slider -->
+  <div class="slider">
 
-    <div style="padding:28px">
+    <input type="radio" name="s" id="s1" checked>
+    <input type="radio" name="s" id="s2">
+    <input type="radio" name="s" id="s3">
+    <input type="radio" name="s" id="s4">
+    <input type="radio" name="s" id="s5">
 
-      <!-- Bienvenida -->
-      <div style="background:rgba(200,255,1,.05);border-left:4px solid #c8ff01;border-radius:10px;padding:18px;margin-bottom:20px;color:#fff">
-        <h1 style="margin:0 0 8px;color:#c8ff01;font-size:1.6rem">
-          Bienvenido(a)
-        </h1>
-        <p style="margin:0;color:rgba(255,255,255,.85);line-height:1.6;font-size:.95rem">
-          Explora el siguiente recurso visual de manera progresiva. Avanza cuando comprendas cada elemento.
-        </p>
+    <div class="window">
+      <div class="track">
+        <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/11.png?raw=true">
+        <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/12.png?raw=true">
+        <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/13.png?raw=true">
+        <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/14.png?raw=true">
+        <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/15.png?raw=true">
       </div>
-
-      <div class="slider-moodle">
-
-        <!-- Radios -->
-        <input type="radio" name="slider" id="slide1" checked>
-        <input type="radio" name="slider" id="slide2">
-        <input type="radio" name="slider" id="slide3">
-        <input type="radio" name="slider" id="slide4">
-        <input type="radio" name="slider" id="slide5">
-
-        <!-- Slider -->
-        <div class="slider-window">
-          <div class="slides-track">
-            <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/11.png?raw=true">
-            <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/12.png?raw=true">
-            <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/13.png?raw=true">
-            <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/14.png?raw=true">
-            <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/15.png?raw=true">
-          </div>
-        </div>
-
-        <!-- Indicadores -->
-        <div class="puntos">
-          <label for="slide1"></label>
-          <label for="slide2"></label>
-          <label for="slide3"></label>
-          <label for="slide4"></label>
-          <label for="slide5"></label>
-        </div>
-
-        <!-- Navegación -->
-        <div class="nav-slide nav1">
-          <label for="slide5" class="btn-moodle btn-atras">←</label>
-          <label for="slide2" class="btn-moodle btn-siguiente">→</label>
-        </div>
-
-        <div class="nav-slide nav2">
-          <label for="slide1" class="btn-moodle btn-atras">←</label>
-          <label for="slide3" class="btn-moodle btn-siguiente">→</label>
-        </div>
-
-        <div class="nav-slide nav3">
-          <label for="slide2" class="btn-moodle btn-atras">←</label>
-          <label for="slide4" class="btn-moodle btn-siguiente">→</label>
-        </div>
-
-        <div class="nav-slide nav4">
-          <label for="slide3" class="btn-moodle btn-atras">←</label>
-          <label for="slide5" class="btn-moodle btn-siguiente">→</label>
-        </div>
-
-        <div class="nav-slide nav5">
-          <label for="slide4" class="btn-moodle btn-atras">←</label>
-          <label for="slide1" class="btn-moodle btn-siguiente">→</label>
-        </div>
-
-      </div>
-
     </div>
+
+    <!-- Indicadores -->
+    <div class="dots">
+      <label for="s1"></label>
+      <label for="s2"></label>
+      <label for="s3"></label>
+      <label for="s4"></label>
+      <label for="s5"></label>
+    </div>
+
+    <!-- Navegación -->
+    <div class="nav n1">
+      <label for="s5" class="btn prev">←</label>
+      <label for="s2" class="btn next">→</label>
+    </div>
+
+    <div class="nav n2">
+      <label for="s1" class="btn prev">←</label>
+      <label for="s3" class="btn next">→</label>
+    </div>
+
+    <div class="nav n3">
+      <label for="s2" class="btn prev">←</label>
+      <label for="s4" class="btn next">→</label>
+    </div>
+
+    <div class="nav n4">
+      <label for="s3" class="btn prev">←</label>
+      <label for="s5" class="btn next">→</label>
+    </div>
+
+    <div class="nav n5">
+      <label for="s4" class="btn prev">←</label>
+      <label for="s1" class="btn next">→</label>
+    </div>
+
   </div>
 
 </div>
