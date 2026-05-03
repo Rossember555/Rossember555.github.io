@@ -1,191 +1,127 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recurso Interactivo Moodle</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recurso</title>
 
-  <style>
-    body {
-      margin: 0;
-      padding: 30px;
-      background: #050801;
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-    }
+<style>
+body{margin:0;padding:20px;background:#050801;font-family:'Segoe UI',Tahoma,sans-serif}
+.moodle-content-container{max-width:1000px;margin:auto}
 
-    .moodle-content-container {
-      max-width: 1100px;
-      margin: auto;
-    }
+.slider-moodle input{display:none}
+.slider-window{overflow:hidden;border-radius:14px;border:1px solid rgba(200,255,1,.18)}
+.slides-track{display:flex;width:500%;transition:transform .7s ease}
+.slides-track img{width:20%;flex-shrink:0}
 
-    .slider-moodle input {
-      display: none;
-    }
+#slide1:checked~.slider-window .slides-track{transform:translateX(0)}
+#slide2:checked~.slider-window .slides-track{transform:translateX(-20%)}
+#slide3:checked~.slider-window .slides-track{transform:translateX(-40%)}
+#slide4:checked~.slider-window .slides-track{transform:translateX(-60%)}
+#slide5:checked~.slider-window .slides-track{transform:translateX(-80%)}
 
-    .slider-window {
-      overflow: hidden;
-      border-radius: 14px;
-      border: 1px solid rgba(200,255,1,0.18);
-      background: #050801;
-    }
+.nav-slide{display:none;justify-content:center;gap:12px;margin-top:14px}
+#slide1:checked~.nav1,
+#slide2:checked~.nav2,
+#slide3:checked~.nav3,
+#slide4:checked~.nav4,
+#slide5:checked~.nav5{display:flex}
 
-    .slides-track {
-      display: flex;
-      width: 500%;
-      transition: transform 0.7s ease-in-out;
-    }
+.btn-moodle{padding:10px 20px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.9rem}
+.btn-atras{border:1px solid rgba(200,255,1,.4);color:#c8ff01;background:transparent}
+.btn-siguiente{border:1px solid #c8ff01;background:#c8ff01;color:#0a1104}
 
-    .slides-track img {
-      width: 20%;
-      height: auto;
-      display: block;
-      flex-shrink: 0;
-    }
-
-    #slide1:checked ~ .slider-window .slides-track { transform: translateX(0%); }
-    #slide2:checked ~ .slider-window .slides-track { transform: translateX(-20%); }
-    #slide3:checked ~ .slider-window .slides-track { transform: translateX(-40%); }
-    #slide4:checked ~ .slider-window .slides-track { transform: translateX(-60%); }
-    #slide5:checked ~ .slider-window .slides-track { transform: translateX(-80%); }
-
-    .nav-slide {
-      display: none;
-      justify-content: center;
-      gap: 18px;
-      margin-top: 18px;
-      flex-wrap: wrap;
-    }
-
-    #slide1:checked ~ .nav1,
-    #slide2:checked ~ .nav2,
-    #slide3:checked ~ .nav3,
-    #slide4:checked ~ .nav4,
-    #slide5:checked ~ .nav5 {
-      display: flex;
-    }
-
-    .btn-moodle {
-      padding: 12px 28px;
-      border-radius: 12px;
-      font-weight: 800;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    .btn-atras {
-      border: 2px solid rgba(200,255,1,0.35);
-      color: #c8ff01;
-      background: transparent;
-    }
-
-    .btn-siguiente {
-      border: 2px solid #c8ff01;
-      color: #0a1104;
-      background: #c8ff01;
-    }
-
-    .puntos {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 16px;
-    }
-
-    .puntos label {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.25);
-      cursor: pointer;
-    }
-
-    #slide1:checked ~ .puntos label:nth-child(1),
-    #slide2:checked ~ .puntos label:nth-child(2),
-    #slide3:checked ~ .puntos label:nth-child(3),
-    #slide4:checked ~ .puntos label:nth-child(4),
-    #slide5:checked ~ .puntos label:nth-child(5) {
-      background: #c8ff01;
-    }
-  </style>
+.puntos{display:flex;justify-content:center;gap:6px;margin-top:12px}
+.puntos label{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer}
+#slide1:checked~.puntos label:nth-child(1),
+#slide2:checked~.puntos label:nth-child(2),
+#slide3:checked~.puntos label:nth-child(3),
+#slide4:checked~.puntos label:nth-child(4),
+#slide5:checked~.puntos label:nth-child(5){background:#c8ff01}
+</style>
 </head>
 
 <body>
 
-  <div class="moodle-content-container">
+<div class="moodle-content-container">
 
-    <div style="border-radius:20px; overflow:hidden; border:1px solid rgba(200,255,1,0.15); box-shadow:0 10px 30px rgba(0,0,0,0.5); background-color:#0a1104;">
+  <div style="border-radius:18px;overflow:hidden;border:1px solid rgba(200,255,1,.15);box-shadow:0 8px 25px rgba(0,0,0,.5);background:#0a1104">
 
-      <div style="height:4px; background-image:linear-gradient(90deg,#C8FF01,#00E5FF,#FFCE00);"></div>
+    <div style="height:4px;background:linear-gradient(90deg,#C8FF01,#00E5FF,#FFCE00)"></div>
 
-      <div style="padding:32px 36px 26px;">
+    <div style="padding:28px">
 
-        <div style="background-color:rgba(200,255,1,0.06); border-left:5px solid #c8ff01; border-radius:12px; padding:22px 24px; color:#ffffff; margin-bottom:24px;">
-          <h1 style="margin:0 0 10px; color:#c8ff01; font-size:2rem;">
-            Bienvenido(a) a este recurso
-          </h1>
+      <!-- Bienvenida -->
+      <div style="background:rgba(200,255,1,.05);border-left:4px solid #c8ff01;border-radius:10px;padding:18px;margin-bottom:20px;color:#fff">
+        <h1 style="margin:0 0 8px;color:#c8ff01;font-size:1.6rem">
+          Bienvenido(a)
+        </h1>
+        <p style="margin:0;color:rgba(255,255,255,.85);line-height:1.6;font-size:.95rem">
+          Explora el siguiente recurso visual de manera progresiva. Avanza cuando comprendas cada elemento.
+        </p>
+      </div>
 
-          <p style="margin:0; line-height:1.7; color:rgba(255,255,255,0.88); font-size:1rem;">
-            A continuación encontrarás una secuencia visual diseñada para guiar tu comprensión paso a paso. Revisa cada imagen con atención y utiliza los botones para avanzar por el recurso.
-          </p>
+      <div class="slider-moodle">
+
+        <!-- Radios -->
+        <input type="radio" name="slider" id="slide1" checked>
+        <input type="radio" name="slider" id="slide2">
+        <input type="radio" name="slider" id="slide3">
+        <input type="radio" name="slider" id="slide4">
+        <input type="radio" name="slider" id="slide5">
+
+        <!-- Slider -->
+        <div class="slider-window">
+          <div class="slides-track">
+            <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/11.png?raw=true">
+            <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/12.png?raw=true">
+            <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/13.png?raw=true">
+            <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/14.png?raw=true">
+            <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/15.png?raw=true">
+          </div>
         </div>
 
-        <div class="slider-moodle">
+        <!-- Indicadores -->
+        <div class="puntos">
+          <label for="slide1"></label>
+          <label for="slide2"></label>
+          <label for="slide3"></label>
+          <label for="slide4"></label>
+          <label for="slide5"></label>
+        </div>
 
-          <input type="radio" name="slider" id="slide1" checked>
-          <input type="radio" name="slider" id="slide2">
-          <input type="radio" name="slider" id="slide3">
-          <input type="radio" name="slider" id="slide4">
-          <input type="radio" name="slider" id="slide5">
+        <!-- Navegación -->
+        <div class="nav-slide nav1">
+          <label for="slide5" class="btn-moodle btn-atras">←</label>
+          <label for="slide2" class="btn-moodle btn-siguiente">→</label>
+        </div>
 
-          <div class="slider-window">
-            <div class="slides-track">
-              <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/11.png?raw=true" alt="Imagen 1">
-              <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/12.png?raw=true" alt="Imagen 2">
-              <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/13.png?raw=true" alt="Imagen 3">
-              <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/14.png?raw=true" alt="Imagen 4">
-              <img src="https://github.com/Rossember555/Imagenes_Moodle/blob/main/15.png?raw=true" alt="Imagen 5">
-            </div>
-          </div>
+        <div class="nav-slide nav2">
+          <label for="slide1" class="btn-moodle btn-atras">←</label>
+          <label for="slide3" class="btn-moodle btn-siguiente">→</label>
+        </div>
 
-          <div class="puntos">
-            <label for="slide1"></label>
-            <label for="slide2"></label>
-            <label for="slide3"></label>
-            <label for="slide4"></label>
-            <label for="slide5"></label>
-          </div>
+        <div class="nav-slide nav3">
+          <label for="slide2" class="btn-moodle btn-atras">←</label>
+          <label for="slide4" class="btn-moodle btn-siguiente">→</label>
+        </div>
 
-          <div class="nav-slide nav1">
-            <label for="slide5" class="btn-moodle btn-atras">← Atrás</label>
-            <label for="slide2" class="btn-moodle btn-siguiente">Siguiente →</label>
-          </div>
+        <div class="nav-slide nav4">
+          <label for="slide3" class="btn-moodle btn-atras">←</label>
+          <label for="slide5" class="btn-moodle btn-siguiente">→</label>
+        </div>
 
-          <div class="nav-slide nav2">
-            <label for="slide1" class="btn-moodle btn-atras">← Atrás</label>
-            <label for="slide3" class="btn-moodle btn-siguiente">Siguiente →</label>
-          </div>
-
-          <div class="nav-slide nav3">
-            <label for="slide2" class="btn-moodle btn-atras">← Atrás</label>
-            <label for="slide4" class="btn-moodle btn-siguiente">Siguiente →</label>
-          </div>
-
-          <div class="nav-slide nav4">
-            <label for="slide3" class="btn-moodle btn-atras">← Atrás</label>
-            <label for="slide5" class="btn-moodle btn-siguiente">Siguiente →</label>
-          </div>
-
-          <div class="nav-slide nav5">
-            <label for="slide4" class="btn-moodle btn-atras">← Atrás</label>
-            <label for="slide1" class="btn-moodle btn-siguiente">Siguiente →</label>
-          </div>
-
+        <div class="nav-slide nav5">
+          <label for="slide4" class="btn-moodle btn-atras">←</label>
+          <label for="slide1" class="btn-moodle btn-siguiente">→</label>
         </div>
 
       </div>
-    </div>
 
+    </div>
   </div>
+
+</div>
 
 </body>
 </html>
